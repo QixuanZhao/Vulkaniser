@@ -17,9 +17,14 @@ qt_add_executable(Vulkaniser
     src/mainwindow.ui
 )
 
-target_include_directories(Vulkaniser PRIVATE src)
+target_include_directories(Vulkaniser 
+    PRIVATE src
+)
 
-target_link_libraries(Vulkaniser PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(Vulkaniser 
+    PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
+    Vulkan::Vulkan
+)
 
 set_target_properties(Vulkaniser PROPERTIES
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
