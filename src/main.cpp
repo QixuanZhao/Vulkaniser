@@ -1,18 +1,30 @@
+#include "UI/TrialVulkanWindow/TrialVulkanWindow.h"
 #include <QApplication>
+#include <QVulkanWindow>
+#include <QVulkanInstance>
+#include <QWidget>
 #include "mainwindow.h"
 #include <vulkan/vulkan.h>
 #include <iostream>
 
 int main(int argc, char *argv[])
 {
-    uint32_t extensionCount = 0;
-    vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
-    std::cout << "Available Vulkan extensions: " << extensionCount << std::endl;
-
     QApplication a(argc, argv);
 
-    MainWindow w;
-    w.show();
+    QVulkanWindow * vulkanWindow = new TrialVulkanWindow();
+    QVulkanInstance * vulkanInstance = new QVulkanInstance();
+    if (vulkanInstance->create()) {
+        vulkanWindow->setVulkanInstance(vulkanInstance);
+    }
+
+    QWidget *container = QWidget::createWindowContainer(vulkanWindow);
+    container->setMinimumSize(800, 600);
+
+    MainWindow mainWindow;
+    mainWindow.setCentralWidget(container);
+
+    mainWindow.resize(800, 600);
+    mainWindow.show();
 
     return a.exec();
 }

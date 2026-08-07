@@ -7,14 +7,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Vulkan REQUIRED)
+find_package(slang CONFIG HINTS "$ENV{VULKAN_SDK}/lib/cmake")
 
 qt_standard_project_setup()
 
 qt_add_executable(Vulkaniser
     src/main.cpp
     src/mainwindow.cpp
-    src/mainwindow.h
     src/mainwindow.ui
+    src/UI/TrialVulkanWindow/TrialVulkanWindow.cpp
 )
 
 target_include_directories(Vulkaniser 
