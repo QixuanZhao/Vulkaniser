@@ -1,9 +1,5 @@
-#include "UI/TrialVulkanWindow/TrialVulkanWindow.h"
-#include <QApplication>
-#include <QVulkanWindow>
-#include <QVulkanInstance>
-#include <QWidget>
 #include "mainwindow.h"
+#include "UI/TrialVulkanWindow/TrialVulkanWindow.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,9 +12,15 @@ int main(int argc, char *argv[])
 #endif
     if (vulkanInstance->create()) {
         vulkanWindow->setVulkanInstance(vulkanInstance);
+    } else {
+        VkResult result = vulkanInstance->errorCode();
+        VulkanUtility::print(result, std::cerr);
+        return EXIT_FAILURE;
     }
+    
+    // vulkanInstance->vkInstance();
 
-    QWidget *container = QWidget::createWindowContainer(vulkanWindow);
+    QWidget * container = QWidget::createWindowContainer(vulkanWindow);
 
     MainWindow mainWindow;
     mainWindow.setCentralWidget(container);

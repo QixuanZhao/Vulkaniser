@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 project(Vulkaniser VERSION 0.1 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
@@ -16,9 +16,15 @@ qt_add_executable(Vulkaniser
     src/mainwindow.cpp
     src/mainwindow.ui
     src/UI/TrialVulkanWindow/TrialVulkanWindow.cpp
+    src/Utilities/VulkanUtility.cpp
+    src/Global/VulkanManager.cpp
 )
 
 target_precompile_headers(Vulkaniser PRIVATE src/pch.h)
+
+target_compile_definitions(Vulkaniser PUBLIC
+    VULKAN_HPP_NO_STRUCT_CONSTRUCTORS=1
+)
 
 target_include_directories(Vulkaniser 
     PRIVATE src
