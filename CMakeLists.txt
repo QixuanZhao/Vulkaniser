@@ -18,6 +18,8 @@ qt_add_executable(Vulkaniser
     src/UI/TrialVulkanWindow/TrialVulkanWindow.cpp
 )
 
+target_precompile_headers(Vulkaniser PRIVATE src/pch.h)
+
 target_include_directories(Vulkaniser 
     PRIVATE src
 )

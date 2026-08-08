@@ -4,8 +4,6 @@
 #include <QVulkanInstance>
 #include <QWidget>
 #include "mainwindow.h"
-#include <vulkan/vulkan.h>
-#include <iostream>
 
 int main(int argc, char *argv[])
 {
@@ -14,7 +12,6 @@ int main(int argc, char *argv[])
     QVulkanWindow * vulkanWindow = new TrialVulkanWindow();
     QVulkanInstance * vulkanInstance = new QVulkanInstance();
 #if defined(Q_OS_MACOS) || defined(Q_OS_DARWIN)
-    // 开启 macOS MoltenVK 必需的移植层标识
     vulkanInstance->setFlags(QVulkanInstance::Flags(VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR));
 #endif
     if (vulkanInstance->create()) {
