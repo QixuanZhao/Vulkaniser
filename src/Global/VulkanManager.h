@@ -11,8 +11,6 @@ protected:
 
     vk::raii::Context m_context;
     vk::raii::Instance m_instance{nullptr};
-
-    void createInstance();
 public:
     inline static VulkanManager& shared() {
         return VulkanManager::vulkanManagerInstance;
@@ -20,10 +18,6 @@ public:
 
     inline void setInstance(const VkInstance& instance) {
         m_instance = vk::raii::Instance(m_context, vk::Instance(instance));
-    }
-
-    inline void initialize() {
-        createInstance();
     }
 
     inline vk::raii::Instance& instance() { return m_instance; }

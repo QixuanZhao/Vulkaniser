@@ -28,10 +28,6 @@ qt_add_executable(Vulkaniser
 
 target_precompile_headers(Vulkaniser PRIVATE src/pch.h)
 
-target_compile_definitions(Vulkaniser PUBLIC
-    VULKAN_HPP_NO_STRUCT_CONSTRUCTORS=1
-)
-
 target_include_directories(Vulkaniser 
     PRIVATE src
 )
