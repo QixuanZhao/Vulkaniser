@@ -16,8 +16,10 @@ qt_add_executable(Vulkaniser
     src/mainwindow.cpp
     src/mainwindow.ui
     src/UI/TrialVulkanWindow/TrialVulkanWindow.cpp
+    src/UI/TrialVulkanWidget/TrialVulkanWidget.cpp
     src/Utilities/VulkanUtility.cpp
     src/Global/VulkanManager.cpp
+    src/Renderer/Renderer.cpp
 )
 
 target_precompile_headers(Vulkaniser PRIVATE src/pch.h)

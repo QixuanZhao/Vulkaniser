@@ -20,6 +20,7 @@
 #include <QVulkanWindow>
 #include <QVulkanInstance>
 #include <QWidget>
+#include <QLayout>
 
 // Project headers
 #include "Utilities/VulkanUtility.h"
