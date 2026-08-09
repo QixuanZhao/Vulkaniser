@@ -26,7 +26,7 @@ TrialVulkanWidget::TrialVulkanWidget(TrialVulkanWindow *window, QWidget *parent)
 #endif
     if (!vulkanInstance->create()) {
         VkResult result = vulkanInstance->errorCode();
-        VulkanUtility::print(result, std::cerr);
+        std::cerr << vk::to_string(vk::Result(result)) << std::endl;
         QMessageBox::critical(this, tr("Vulkan"), tr("Failed to create a Vulkan instance."));
         return;
     }

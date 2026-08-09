@@ -26,7 +26,6 @@
 #include <QAbstractListModel>
 
 // Project headers
-#include "Utilities/VulkanUtility.h"
 #include "Global/VulkanManager.h"
 
 // Projection Macros

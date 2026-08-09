@@ -17,7 +17,6 @@ qt_add_executable(Vulkaniser
     src/mainwindow.ui
     src/UI/TrialVulkanWindow/TrialVulkanWindow.cpp
     src/UI/TrialVulkanWidget/TrialVulkanWidget.cpp
-    src/Utilities/VulkanUtility.cpp
     src/Global/VulkanManager.cpp
     src/Renderer/Renderer.cpp
     src/UI/VulkanExtensionList/VulkanExtensionListView.cpp

@@ -100,5 +100,25 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>menubar</sender>
+   <signal>triggered(QAction*)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>process(QAction*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>41</x>
+     <y>12</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>42</x>
+     <y>32</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>process(QAction*)</slot>
+ </slots>
 </ui>
