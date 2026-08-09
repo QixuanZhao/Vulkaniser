@@ -1,18 +1,20 @@
 #pragma once
 
+#include <cstdlib>
+#include <vulkan/vulkan_to_string.hpp>
 class VulkanManager {
 protected:
     VulkanManager() = default;
     static VulkanManager vulkanManagerInstance;
 
-    vk::raii::Context vkRaiiContext;
-    vk::raii::Instance vkInstance = nullptr;
+    vk::raii::Context m_context;
+    vk::raii::Instance m_instance = nullptr;
 
     void createInstance() {
-        if (vkInstance != nullptr) { return; }
-
-        std::vector<const char*> instanceExtensions = {
-            VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME
+        if (m_instance != nullptr) { return; }
+        
+        std::vector<const char*> extensionNames = {
+            vk::KHRPortabilityEnumerationExtensionName
         };
 
         constexpr vk::ApplicationInfo appInfo = {
@@ -24,13 +26,24 @@ protected:
         };
 
         vk::InstanceCreateInfo instanceCreateInfo = {
+            .flags = vk::InstanceCreateFlagBits::eEnumeratePortabilityKHR,
             .pApplicationInfo = &appInfo,
+            .enabledExtensionCount = static_cast<uint32_t>(extensionNames.size()),
+            .ppEnabledExtensionNames = extensionNames.data()
         };
 
-        instanceCreateInfo.setFlags(vk::InstanceCreateFlagBits::eEnumeratePortabilityKHR);
-        instanceCreateInfo.setPEnabledExtensionNames(instanceExtensions);
-
-        vkInstance = vk::raii::Instance(vkRaiiContext, instanceCreateInfo);
+        try {
+            m_instance = vk::raii::Instance(m_context, instanceCreateInfo);
+        } catch (const vk::SystemError& err) {
+            std::cerr << "Vulkan error: " << err.what() << std::endl;
+            std::exit(EXIT_FAILURE);
+        } catch (const std::exception& err) {
+            std::cerr << "Error: " << err.what() << std::endl;
+            std::exit(EXIT_FAILURE);
+        } catch (...) {
+            std::cerr << "Unknown error" << std::endl;
+            std::exit(EXIT_FAILURE);
+        }
     }
 
     ~VulkanManager() {
@@ -41,8 +54,8 @@ public:
         return VulkanManager::vulkanManagerInstance;
     }
 
-    void setInstance(VkInstance* instance) {
-        vkInstance = vk::raii::Instance(vkRaiiContext, vk::Instance(*instance));
+    void setInstance(const VkInstance& instance) {
+        m_instance = vk::raii::Instance(m_context, vk::Instance(instance));
     }
 
     void initialize() {
@@ -50,10 +63,10 @@ public:
     }
 
     vk::raii::Instance& getVkInstance() {
-        return vkInstance;
+        return m_instance;
     }
 
     void cleanup() {
-        vkInstance.release();
+        m_instance.release();
     }
 };

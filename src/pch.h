@@ -4,6 +4,7 @@
 
 // Vulkan headers
 #define VULKAN_HPP_NO_STRUCT_CONSTRUCTORS
+// #define VULKAN_HPP_NO_EXCEPTIONS
 #include <vulkan/vulkan.hpp>
 #include <vulkan/vulkan_raii.hpp>
 
@@ -12,6 +13,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <tuple>
 
 // Qt headers
 #include <QApplication>

@@ -17,6 +17,7 @@ public:
 protected:
     QVulkanWindow * m_window;
     QVulkanDeviceFunctions * m_devFuncs;
+    const VulkanManager& vulkanManager = VulkanManager::instance();
 };
 
 class TrialVulkanWindow : public QVulkanWindow
@@ -28,4 +29,6 @@ public:
     QVulkanWindowRenderer *createRenderer() override;
 
     ~TrialVulkanWindow();
+protected:
+    const VulkanManager& vulkanManager = VulkanManager::instance();
 };
