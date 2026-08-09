@@ -8,19 +8,19 @@ protected:
     vk::raii::Context vkRaiiContext;
     vk::raii::Instance vkInstance = nullptr;
 
-    constexpr static vk::ApplicationInfo appInfo = {
-        .pApplicationName = "Vulkaniser",
-        .applicationVersion = VK_MAKE_VERSION(0, 0, 0),
-        .pEngineName = "No Engine",
-        .engineVersion = VK_MAKE_VERSION(0, 0, 0),
-        .apiVersion = vk::ApiVersion14
-    };
-
     void createInstance() {
         if (vkInstance != nullptr) { return; }
 
         std::vector<const char*> instanceExtensions = {
             VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME
+        };
+
+        constexpr vk::ApplicationInfo appInfo = {
+            .pApplicationName = "Vulkaniser",
+            .applicationVersion = VK_MAKE_VERSION(0, 0, 0),
+            .pEngineName = "No Engine",
+            .engineVersion = VK_MAKE_VERSION(0, 0, 0),
+            .apiVersion = vk::ApiVersion14
         };
 
         vk::InstanceCreateInfo instanceCreateInfo = {

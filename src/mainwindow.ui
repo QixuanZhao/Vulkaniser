@@ -27,10 +27,22 @@
     <property name="title">
      <string>Menu</string>
     </property>
+    <addaction name="actionInfo"/>
+   </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
    </widget>
    <addaction name="menuMenu"/>
+   <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionInfo">
+   <property name="text">
+    <string>Info</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

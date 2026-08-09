@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
     // vulkanInstance->vkInstance();
 
     QWidget * container = QWidget::createWindowContainer(vulkanWindow);
-
     MainWindow mainWindow;
     mainWindow.setCentralWidget(container);
 
