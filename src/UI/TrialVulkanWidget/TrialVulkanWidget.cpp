@@ -31,7 +31,7 @@ TrialVulkanWidget::TrialVulkanWidget(TrialVulkanWindow *window, QWidget *parent)
         return;
     }
 
-    VulkanManager::instance().setInstance(vulkanInstance->vkInstance());
+    VulkanManager::shared().setInstance(vulkanInstance->vkInstance());
 
     m_window->setVulkanInstance(vulkanInstance);
     m_container = QWidget::createWindowContainer(m_window, this);

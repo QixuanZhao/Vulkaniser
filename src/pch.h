@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 #include <tuple>
+#include <mutex>
 
 // Qt headers
 #include <QApplication>
@@ -21,6 +22,8 @@
 #include <QVulkanInstance>
 #include <QWidget>
 #include <QLayout>
+#include <QListView>
+#include <QAbstractListModel>
 
 // Project headers
 #include "Utilities/VulkanUtility.h"

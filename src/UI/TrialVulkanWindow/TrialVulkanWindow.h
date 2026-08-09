@@ -11,5 +11,5 @@ public:
 
     ~TrialVulkanWindow();
 protected:
-    const VulkanManager& vulkanManager = VulkanManager::instance();
+    const VulkanManager& vulkanManager = VulkanManager::shared();
 };

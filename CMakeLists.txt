@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core)
 find_package(Vulkan REQUIRED)
 find_package(slang CONFIG HINTS "$ENV{VULKAN_SDK}/lib/cmake")
 
@@ -20,6 +21,8 @@ qt_add_executable(Vulkaniser
     src/Utilities/VulkanUtility.cpp
     src/Global/VulkanManager.cpp
     src/Renderer/Renderer.cpp
+    src/UI/VulkanExtensionList/VulkanExtensionListView.cpp
+    src/UI/VulkanExtensionList/VulkanExtensionListModel.cpp
 )
 
 target_precompile_headers(Vulkaniser PRIVATE src/pch.h)

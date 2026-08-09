@@ -18,14 +18,34 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLabel" name="label">
-        <property name="styleSheet">
-         <string notr="true">background-color: green</string>
-        </property>
-        <property name="text">
-         <string>Text Label</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="text">
+           <string>Supported Vulkan Extensions</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="VulkanExtensionListView" name="listView">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="uniformItemSizes">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <widget class="TrialVulkanWidget" name="widget" native="true">
@@ -92,6 +112,11 @@
    <extends>QWidget</extends>
    <header location="global">UI/TrialVulkanWidget/TrialVulkanWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VulkanExtensionListView</class>
+   <extends>QListView</extends>
+   <header>UI/VulkanExtensionList/VulkanExtensionListView.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
