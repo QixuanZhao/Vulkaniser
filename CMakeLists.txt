@@ -22,6 +22,8 @@ qt_add_executable(Vulkaniser
     src/Renderer/Renderer.cpp
     src/UI/VulkanExtensionList/VulkanExtensionListView.cpp
     src/UI/VulkanExtensionList/VulkanExtensionListModel.cpp
+    src/UI/About/AboutWindow.cpp
+    src/UI/About/AboutWindow.ui
 )
 
 target_precompile_headers(Vulkaniser PRIVATE src/pch.h)

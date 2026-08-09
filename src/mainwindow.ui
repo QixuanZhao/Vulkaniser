@@ -18,36 +18,6 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QLabel" name="label">
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-          <property name="text">
-           <string>Supported Vulkan Extensions</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="VulkanExtensionListView" name="listView">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="alternatingRowColors">
-           <bool>true</bool>
-          </property>
-          <property name="uniformItemSizes">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
        <widget class="TrialVulkanWidget" name="widget" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -96,8 +66,23 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionInfo">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::DialogInformation"/>
+   </property>
    <property name="text">
     <string>Info</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::AboutRole</enum>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionOpen">
@@ -112,11 +97,6 @@
    <extends>QWidget</extends>
    <header location="global">UI/TrialVulkanWidget/TrialVulkanWidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>VulkanExtensionListView</class>
-   <extends>QListView</extends>
-   <header>UI/VulkanExtensionList/VulkanExtensionListView.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
