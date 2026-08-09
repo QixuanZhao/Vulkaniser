@@ -32,22 +32,22 @@ int VulkanExtensionListModel::rowCount(const QModelIndex &parent) const {
 }
 
 QVariant VulkanExtensionListModel::data(const QModelIndex &index, int role) const {
-    if (role != Qt::DisplayRole) {
-        return QVariant();
-    }
-
     const int row = index.row();
     if (row < 0 || row >= static_cast<int>(m_extensionProperties.size())) {
         return QVariant();
     }
 
     const auto &extension = m_extensionProperties[row];
-    QString result;
-    
-    for (char c : extension.extensionName) {
-        if (c == '\0') break;
-        result += c;
-    }
-    
-    return result;
+
+    if (role == Qt::DisplayRole) {
+        QString result;
+        for (char c : extension.extensionName) {
+            if (c == '\0') break;
+            result += c;
+        }
+        
+        return result;
+    } else if (role == Qt::ToolTipRole) {
+        return QString("Version: %1").arg(extension.specVersion);
+    } else return QVariant();
 }
