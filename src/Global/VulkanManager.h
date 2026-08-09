@@ -67,6 +67,8 @@ public:
     }
 
     void cleanup() {
+#if !CREATE_VULKAN_MANUALLY
         m_instance.release();
+#endif
     }
 };

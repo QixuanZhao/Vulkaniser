@@ -1,10 +1,6 @@
 #include "mainwindow.h"
 #include "UI/TrialVulkanWindow/TrialVulkanWindow.h"
 
-// Create a Vulkan instance manually or let QVulkanInstance handle it
-// Please let it be false for now, as it is not working properly on macOS
-#define CREATE_VULKAN_MANUALLY false
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

@@ -24,3 +24,9 @@
 // Project headers
 #include "Utilities/VulkanUtility.h"
 #include "Global/VulkanManager.h"
+
+// Projection Macros
+
+// Create a Vulkan instance manually or let QVulkanInstance handle it
+// Please let it be false for now, as it is not working properly on macOS
+#define CREATE_VULKAN_MANUALLY false
