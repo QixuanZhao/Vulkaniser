@@ -18,16 +18,6 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLabel" name="label">
-        <property name="styleSheet">
-         <string notr="true">background-color: green</string>
-        </property>
-        <property name="text">
-         <string>Text Label</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="TrialVulkanWidget" name="widget" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -76,8 +66,23 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionInfo">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::DialogInformation"/>
+   </property>
    <property name="text">
     <string>Info</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::AboutRole</enum>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionOpen">
@@ -95,5 +100,25 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>menubar</sender>
+   <signal>triggered(QAction*)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>process(QAction*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>41</x>
+     <y>12</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>42</x>
+     <y>32</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>process(QAction*)</slot>
+ </slots>
 </ui>
