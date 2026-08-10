@@ -22,13 +22,7 @@ QVariant VulkanExtensionListModel::data(const QModelIndex &index, int role) cons
     const auto &extension = m_extensionProperties[row];
 
     if (role == Qt::DisplayRole) {
-        QString result;
-        for (char c : extension.extensionName) {
-            if (c == '\0') break;
-            result += c;
-        }
-        
-        return result;
+        return extension.extensionName.data();
     } else if (role == Qt::ToolTipRole) {
         return QString("Version: %1").arg(extension.specVersion);
     } else return QVariant();

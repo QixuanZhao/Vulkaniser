@@ -27,6 +27,13 @@ QVariant VulkanLayerListModel::data(const QModelIndex &index, int role) const {
         }
         return result;
     } else if (role == Qt::ToolTipRole) {
-        return QString("Version: %1").arg(layer.specVersion);
+        return QString(
+            "Spec Version: %1\n"
+            "Implementation Version: %2\n"
+            "Description: %3"
+        )
+        .arg(layer.specVersion)
+        .arg(layer.implementationVersion)
+        .arg(layer.description.data());
     } else return QVariant();
 }

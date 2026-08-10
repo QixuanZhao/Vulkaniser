@@ -15,17 +15,16 @@ qt_add_executable(Vulkaniser
     src/main.cpp
     src/mainwindow.cpp
     src/mainwindow.ui
-    src/UI/TrialVulkanWindow/TrialVulkanWindow.cpp
-    src/UI/TrialVulkanWidget/TrialVulkanWidget.cpp
     src/Global/VulkanManager.cpp
     src/Renderer/Renderer.cpp
-    src/Model/VulkanExtensionList/VulkanExtensionListModel.cpp
+    src/UI/TrialVulkanWindow/TrialVulkanWindow.cpp
+    src/UI/TrialVulkanWidget/TrialVulkanWidget.cpp
+    src/UI/StringListView/StringListView.cpp
     src/UI/About/AboutWindow.cpp
     src/UI/About/AboutWindow.ui
     src/Model/StringList/StringListModel.cpp
-    src/Model/VulkanLayerList/VulkanLayerListModel.h
+    src/Model/VulkanExtensionList/VulkanExtensionListModel.cpp
     src/Model/VulkanLayerList/VulkanLayerListModel.cpp
-    src/UI/StringListView/StringListView.cpp
 )
 
 target_precompile_headers(Vulkaniser PRIVATE src/pch.h)
