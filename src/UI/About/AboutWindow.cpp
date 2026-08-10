@@ -6,10 +6,12 @@ AboutWindow::AboutWindow(QWidget *parent)
     , ui(new Ui::AboutWindow)
     , m_extensionModel(VulkanManager::shared().context().enumerateInstanceExtensionProperties(), this)
     , m_layerModel(VulkanManager::shared().context().enumerateInstanceLayerProperties(), this)
+    , m_physicalDeviceModel(this)
 {
     ui->setupUi(this);
     ui->vkExtList->setModel(&m_extensionModel);
     ui->vkLayerList->setModel(&m_layerModel);
+    ui->vkPDeviceList->setModel(&m_physicalDeviceModel);
 }
 
 AboutWindow::~AboutWindow()

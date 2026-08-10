@@ -25,6 +25,7 @@ qt_add_executable(Vulkaniser
     src/Model/StringList/StringListModel.cpp
     src/Model/VulkanExtensionList/VulkanExtensionListModel.cpp
     src/Model/VulkanLayerList/VulkanLayerListModel.cpp
+    src/Model/PhysicalDeviceList.hpp
 )
 
 target_precompile_headers(Vulkaniser PRIVATE src/pch.h)
