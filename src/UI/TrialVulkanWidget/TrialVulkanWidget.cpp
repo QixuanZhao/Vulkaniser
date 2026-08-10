@@ -1,7 +1,5 @@
 #include "TrialVulkanWidget.h"
 
-#include <QVBoxLayout>
-#include <QSizePolicy>
 #include <QMessageBox>
 
 TrialVulkanWidget::TrialVulkanWidget(QWidget *parent)

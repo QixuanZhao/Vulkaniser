@@ -1,7 +1,5 @@
 #include "VulkanExtensionListModel.h"
 
-#include <QByteArray>
-
 VulkanExtensionListModel::VulkanExtensionListModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_vm(VulkanManager::shared())
