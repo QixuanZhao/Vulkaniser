@@ -17,13 +17,6 @@ TrialVulkanWidget::TrialVulkanWidget(TrialVulkanWindow *window, QWidget *parent)
     layout->setContentsMargins(0, 0, 0, 0);
 
     QVulkanInstance * vulkanInstance = new QVulkanInstance();
-#if CREATE_VULKAN_MANUALLY
-    VulkanManager::instance().initialize();
-    vulkanInstance->setVkInstance(*(VulkanManager::instance().getVkInstance()));
-#else
-#if defined(Q_OS_MACOS) || defined(Q_OS_DARWIN)
-    vulkanInstance->setFlags(QVulkanInstance::Flags(VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR));
-#endif
     if (!vulkanInstance->create()) {
         VkResult result = vulkanInstance->errorCode();
         std::cerr << vk::to_string(vk::Result(result)) << std::endl;
@@ -36,7 +29,6 @@ TrialVulkanWidget::TrialVulkanWidget(TrialVulkanWindow *window, QWidget *parent)
     m_window->setVulkanInstance(vulkanInstance);
     m_container = QWidget::createWindowContainer(m_window, this);
     layout->addWidget(m_container);
-#endif
 }
 
 TrialVulkanWidget::~TrialVulkanWidget()
