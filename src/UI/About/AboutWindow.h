@@ -1,5 +1,6 @@
 #pragma once
-#include <QDialog>
+#include "Model/VulkanExtensionList/VulkanExtensionListModel.h"
+#include "Model/VulkanLayerList/VulkanLayerListModel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,4 +18,6 @@ public:
 
 private:
     Ui::AboutWindow *ui;
+    VulkanExtensionListModel m_extensionModel;
+    VulkanLayerListModel m_layerModel;
 };

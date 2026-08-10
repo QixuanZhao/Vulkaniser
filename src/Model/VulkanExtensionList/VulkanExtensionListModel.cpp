@@ -1,27 +1,11 @@
 #include "VulkanExtensionListModel.h"
 
-VulkanExtensionListModel::VulkanExtensionListModel(QObject *parent)
-    : QAbstractListModel(parent)
-    , m_vm(VulkanManager::shared())
+VulkanExtensionListModel::VulkanExtensionListModel(
+    const std::vector<vk::ExtensionProperties>& extensions, 
+    QObject *parent
+) : QAbstractListModel(parent), 
+    m_extensionProperties(extensions)
 {
-    initialize();
-}
-
-void VulkanExtensionListModel::initialize()
-{
-    if (!m_mutex.try_lock()) {
-        return;
-    }
-
-    if (m_extensionProperties.empty()) {
-        try {
-            m_extensionProperties = m_vm.context().enumerateInstanceExtensionProperties();
-        } catch (...) {
-            m_extensionProperties.clear();
-        }
-    }
-
-    m_mutex.unlock();
 }
 
 int VulkanExtensionListModel::rowCount(const QModelIndex &parent) const {
@@ -31,7 +15,7 @@ int VulkanExtensionListModel::rowCount(const QModelIndex &parent) const {
 
 QVariant VulkanExtensionListModel::data(const QModelIndex &index, int role) const {
     const int row = index.row();
-    if (row < 0 || row >= static_cast<int>(m_extensionProperties.size())) {
+    if (row < 0 || row >= m_extensionProperties.size()) {
         return QVariant();
     }
 

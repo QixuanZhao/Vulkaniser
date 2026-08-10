@@ -30,6 +30,12 @@ public:
         m_instance.release();
 #endif
     }
+
+#if NDEBUG
+    constexpr static bool enableValidationLayers = false;
+#else
+    constexpr static bool enableValidationLayers = true;
+#endif
 };
 
 #endif // VULKAN_MANAGER_H
