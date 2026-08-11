@@ -1,4 +1,6 @@
 #include "VulkanManager.h"
+#include <string>
+#include <vulkan/vulkan.hpp>
 
 VulkanManager VulkanManager::vulkanManagerInstance = VulkanManager();
 
@@ -40,14 +42,25 @@ void VulkanManager::setInstance(const VkInstance& instance) {
 #define ADD_STRING(str, name, parent) \
     parent->addChild(std::make_shared<PhysicalDeviceProperty>(name, str, parent))
 
-        
-        ADD_PROPERTY(apiVersion, "API Version", m_physicalDeviceProperty->lastChild());
-        ADD_PROPERTY(driverVersion, "Driver Version", m_physicalDeviceProperty->lastChild());
+        auto majorApi = vk::apiVersionMajor(properties.apiVersion);
+        auto minorApi = vk::apiVersionMinor(properties.apiVersion);
+        auto patchApi = vk::apiVersionPatch(properties.apiVersion);
+        QVersionNumber apiVersion(majorApi, minorApi, patchApi);
+        ADD_STRING(apiVersion.toString().toStdString(), "API Version", m_physicalDeviceProperty->lastChild());
+
+        majorApi = vk::apiVersionMajor(properties.driverVersion);
+        minorApi = vk::apiVersionMinor(properties.driverVersion);
+        patchApi = vk::apiVersionPatch(properties.driverVersion);
+        QVersionNumber driverVersion(majorApi, minorApi, patchApi);
+        ADD_STRING(driverVersion.toString().toStdString(), "Driver Version", m_physicalDeviceProperty->lastChild());
         ADD_PROPERTY(vendorID, "Vendor ID", m_physicalDeviceProperty->lastChild());
         ADD_PROPERTY(deviceID, "Device ID", m_physicalDeviceProperty->lastChild());
         ADD_STRING(vk::to_string(properties.deviceType), "Device Type", m_physicalDeviceProperty->lastChild());
         ADD_STRING(std::string(properties.deviceName.data()), "Device Name", m_physicalDeviceProperty->lastChild());
-        // ADD_PROPERTY(pipelineCacheUUID, "Pipeline Cache UUID", m_physicalDeviceProperty->lastChild());
+
+        std::string uuidStr;
+        for (uint8_t b : properties.pipelineCacheUUID) uuidStr += std::format("{:02x}", b);
+        ADD_STRING(uuidStr, "Pipeline Cache UUID", m_physicalDeviceProperty->lastChild());
 
         ADD_TREE_NODE("", "Limits", m_physicalDeviceProperty->lastChild());
         ADD_PROPERTY(limits.maxImageDimension1D, "Max Image Dimension 1D", m_physicalDeviceProperty->lastChild()->lastChild());
@@ -102,9 +115,9 @@ void VulkanManager::setInstance(const VkInstance& instance) {
         ADD_PROPERTY(limits.maxFragmentDualSrcAttachments, "Max Fragment Dual Src Attachments", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.maxFragmentCombinedOutputResources, "Max Fragment Combined Output Resources", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.maxComputeSharedMemorySize, "Max Compute Shared Memory Size", m_physicalDeviceProperty->lastChild()->lastChild());
-        // ADD_PROPERTY(limits.maxComputeWorkGroupCount, "Max Compute Work Group Count", m_physicalDeviceProperty->lastChild()->lastChild());
+        ADD_STRING(std::to_string(properties.limits.maxComputeWorkGroupCount[0]) + ", " + std::to_string(properties.limits.maxComputeWorkGroupCount[1]) + ", " + std::to_string(properties.limits.maxComputeWorkGroupCount[2]), "Max Compute Work Group Count", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.maxComputeWorkGroupInvocations, "Max Compute Work Group Invocations", m_physicalDeviceProperty->lastChild()->lastChild());
-        // ADD_PROPERTY(limits.maxComputeWorkGroupSize, "Max Compute Work Group Size", m_physicalDeviceProperty->lastChild()->lastChild());
+        ADD_STRING(std::to_string(properties.limits.maxComputeWorkGroupSize[0]) + ", " + std::to_string(properties.limits.maxComputeWorkGroupSize[1]) + ", " + std::to_string(properties.limits.maxComputeWorkGroupSize[2]), "Max Compute Work Group Size", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.subPixelPrecisionBits, "Sub Pixel Precision Bits", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.subTexelPrecisionBits, "Sub Texel Precision Bits", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.mipmapPrecisionBits, "Mipmap Precision Bits", m_physicalDeviceProperty->lastChild()->lastChild());
@@ -113,8 +126,8 @@ void VulkanManager::setInstance(const VkInstance& instance) {
         ADD_PROPERTY(limits.maxSamplerLodBias, "Max Sampler LOD Bias", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.maxSamplerAnisotropy, "Max Sampler Anisotropy", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.maxViewports, "Max Viewports", m_physicalDeviceProperty->lastChild()->lastChild());
-        // ADD_PROPERTY(limits.maxViewportDimensions, "Max Viewport Dimensions", m_physicalDeviceProperty->lastChild()->lastChild());
-        // ADD_PROPERTY(limits.viewportBoundsRange, "Viewport Bounds Range", m_physicalDeviceProperty->lastChild()->lastChild());
+        ADD_STRING(std::to_string(properties.limits.maxViewportDimensions[0]) + " X " + std::to_string(properties.limits.maxViewportDimensions[1]), "Max Viewport Dimensions", m_physicalDeviceProperty->lastChild()->lastChild());
+        ADD_STRING(std::to_string(properties.limits.viewportBoundsRange[0]) + ", " + std::to_string(properties.limits.viewportBoundsRange[1]), "Viewport Bounds Range", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.viewportSubPixelBits, "Viewport Sub Pixel Bits", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.minMemoryMapAlignment, "Min Memory Map Alignment", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.minTexelBufferOffsetAlignment, "Min Texel Buffer Offset Alignment", m_physicalDeviceProperty->lastChild()->lastChild());
@@ -130,16 +143,16 @@ void VulkanManager::setInstance(const VkInstance& instance) {
         ADD_PROPERTY(limits.maxFramebufferWidth, "Max Framebuffer Width", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.maxFramebufferHeight, "Max Framebuffer Height", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.maxFramebufferLayers, "Max Framebuffer Layers", m_physicalDeviceProperty->lastChild()->lastChild());
-        // ADD_PROPERTY(limits.framebufferColorSampleCounts, "Framebuffer Color Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
-        // ADD_PROPERTY(limits.framebufferDepthSampleCounts, "Framebuffer Depth Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
-        // ADD_PROPERTY(limits.framebufferStencilSampleCounts, "Framebuffer Stencil Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
-        // ADD_PROPERTY(limits.framebufferNoAttachmentsSampleCounts, "Framebuffer No Attachments Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
+        ADD_STRING(vk::to_string(properties.limits.framebufferColorSampleCounts), "Framebuffer Color Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
+        ADD_STRING(vk::to_string(properties.limits.framebufferDepthSampleCounts), "Framebuffer Depth Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
+        ADD_STRING(vk::to_string(properties.limits.framebufferStencilSampleCounts), "Framebuffer Stencil Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
+        ADD_STRING(vk::to_string(properties.limits.framebufferNoAttachmentsSampleCounts), "Framebuffer No Attachments Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.maxColorAttachments, "Max Color Attachments", m_physicalDeviceProperty->lastChild()->lastChild());
-        // ADD_PROPERTY(limits.sampledImageColorSampleCounts, "Sampled Image Color Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
-        // ADD_PROPERTY(limits.sampledImageIntegerSampleCounts, "Sampled Image Integer Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
-        // ADD_PROPERTY(limits.sampledImageDepthSampleCounts, "Sampled Image Depth Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
-        // ADD_PROPERTY(limits.sampledImageStencilSampleCounts, "Sampled Image Stencil Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
-        // ADD_PROPERTY(limits.storageImageSampleCounts, "Storage Image Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
+        ADD_STRING(vk::to_string(properties.limits.sampledImageColorSampleCounts), "Sampled Image Color Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
+        ADD_STRING(vk::to_string(properties.limits.sampledImageIntegerSampleCounts), "Sampled Image Integer Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
+        ADD_STRING(vk::to_string(properties.limits.sampledImageDepthSampleCounts), "Sampled Image Depth Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
+        ADD_STRING(vk::to_string(properties.limits.sampledImageStencilSampleCounts), "Sampled Image Stencil Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
+        ADD_STRING(vk::to_string(properties.limits.storageImageSampleCounts), "Storage Image Sample Counts", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.maxSampleMaskWords, "Max Sample Mask Words", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.timestampComputeAndGraphics, "Timestamp Compute And Graphics", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.timestampPeriod, "Timestamp Period", m_physicalDeviceProperty->lastChild()->lastChild());
@@ -147,8 +160,8 @@ void VulkanManager::setInstance(const VkInstance& instance) {
         ADD_PROPERTY(limits.maxCullDistances, "Max Cull Distances", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.maxCombinedClipAndCullDistances, "Max Combined Clip And Cull Distances", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.discreteQueuePriorities, "Discrete Queue Priorities", m_physicalDeviceProperty->lastChild()->lastChild());
-        // ADD_PROPERTY(limits.pointSizeRange, "Point Size Range", m_physicalDeviceProperty->lastChild()->lastChild());
-        // ADD_PROPERTY(limits.lineWidthRange, "Line Width Range", m_physicalDeviceProperty->lastChild()->lastChild());
+        ADD_STRING(std::to_string(properties.limits.pointSizeRange[0]) + ", " + std::to_string(properties.limits.pointSizeRange[1]), "Point Size Range", m_physicalDeviceProperty->lastChild()->lastChild());
+        ADD_STRING(std::to_string(properties.limits.lineWidthRange[0]) + ", " + std::to_string(properties.limits.lineWidthRange[1]), "Line Width Range", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.pointSizeGranularity, "Point Size Granularity", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.lineWidthGranularity, "Line Width Granularity", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_PROPERTY(limits.strictLines, "Strict Lines", m_physicalDeviceProperty->lastChild()->lastChild());
@@ -178,7 +191,7 @@ void VulkanManager::setInstance(const VkInstance& instance) {
                                     parent);\
         }())\
     )
-    
+
         ADD_FEATURE(robustBufferAccess, "Robust Buffer Access", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_FEATURE(fullDrawIndexUint32, "Full Draw Index Uint32", m_physicalDeviceProperty->lastChild()->lastChild());
         ADD_FEATURE(imageCubeArray, "Image Cube Array", m_physicalDeviceProperty->lastChild()->lastChild());
