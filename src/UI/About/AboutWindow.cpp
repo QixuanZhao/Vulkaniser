@@ -11,7 +11,7 @@ AboutWindow::AboutWindow(QWidget *parent)
     ui->setupUi(this);
     ui->vkExtList->setModel(&m_extensionModel);
     ui->vkLayerList->setModel(&m_layerModel);
-    ui->vkPDeviceList->setModel(&m_physicalDeviceModel);
+    ui->vkPDeviceTree->setModel(&m_physicalDeviceModel);
 }
 
 AboutWindow::~AboutWindow()

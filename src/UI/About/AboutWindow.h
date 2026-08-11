@@ -1,7 +1,7 @@
 #pragma once
 #include "Model/VulkanExtensionList/VulkanExtensionListModel.h"
 #include "Model/VulkanLayerList/VulkanLayerListModel.h"
-#include "Model/PhysicalDeviceList.hpp"
+#include "Model/PhysicalDeviceDetailList.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -21,5 +21,5 @@ private:
     Ui::AboutWindow *ui;
     VulkanExtensionListModel m_extensionModel;
     VulkanLayerListModel m_layerModel;
-    PhysicalDeviceList m_physicalDeviceModel;
+    PhysicalDeviceDetailList m_physicalDeviceModel;
 };

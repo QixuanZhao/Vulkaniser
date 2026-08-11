@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Global/PhysicalDeviceProperty.h"
 #ifndef VULKAN_MANAGER_H
 #define VULKAN_MANAGER_H
 
@@ -12,19 +13,13 @@ protected:
     vk::raii::Context m_context;
     vk::raii::Instance m_instance{nullptr};
     vk::raii::PhysicalDevices m_physicalDevices{nullptr};
+    std::shared_ptr<PhysicalDeviceProperty> m_physicalDeviceProperty{nullptr};
 public:
     inline static VulkanManager& shared() {
         return VulkanManager::vulkanManagerInstance;
     }
 
-    inline void setInstance(const VkInstance& instance) {
-        m_instance = vk::raii::Instance(m_context, vk::Instance(instance));
-        m_physicalDevices = vk::raii::PhysicalDevices(m_instance);
-        
-        if (m_physicalDevices.empty()) {
-            throw std::runtime_error("No physical devices found.");
-        }
-    }
+    void setInstance(const VkInstance& instance);
 
     inline vk::raii::Instance& instance() { return m_instance; }
     inline const vk::raii::Instance& instance() const { return m_instance; }
@@ -32,6 +27,7 @@ public:
     inline const vk::raii::Context& context() const { return m_context; }
     inline vk::raii::PhysicalDevices& physicalDevices() { return m_physicalDevices; }
     inline const vk::raii::PhysicalDevices& physicalDevices() const { return m_physicalDevices; }
+    inline std::shared_ptr<const PhysicalDeviceProperty> physicalDeviceProperty() const { return m_physicalDeviceProperty; }
 
     void cleanup() {
 #if !CREATE_VULKAN_MANUALLY

@@ -16,6 +16,7 @@ qt_add_executable(Vulkaniser
     src/mainwindow.cpp
     src/mainwindow.ui
     src/Global/VulkanManager.cpp
+    src/Global/PhysicalDeviceProperty.cpp
     src/Renderer/Renderer.cpp
     src/UI/TrialVulkanWindow/TrialVulkanWindow.cpp
     src/UI/TrialVulkanWidget/TrialVulkanWidget.cpp
@@ -25,7 +26,7 @@ qt_add_executable(Vulkaniser
     src/Model/StringList/StringListModel.cpp
     src/Model/VulkanExtensionList/VulkanExtensionListModel.cpp
     src/Model/VulkanLayerList/VulkanLayerListModel.cpp
-    src/Model/PhysicalDeviceList.hpp
+    src/Model/PhysicalDeviceDetailList.hpp
 )
 
 target_precompile_headers(Vulkaniser PRIVATE src/pch.h)
