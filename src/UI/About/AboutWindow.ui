@@ -38,26 +38,6 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QLabel" name="vkPDeviceLabel">
-         <property name="text">
-          <string>Physical Devices</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTreeView" name="vkPDeviceTree">
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
-         <property name="indentation">
-          <number>5</number>
-         </property>
-         <property name="itemsExpandable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item>
@@ -88,6 +68,29 @@
       </layout>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="vkPDeviceLabel">
+     <property name="text">
+      <string>Physical Devices</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTreeView" name="vkPDeviceTree">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="itemsExpandable">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QPushButton" name="pushButton">

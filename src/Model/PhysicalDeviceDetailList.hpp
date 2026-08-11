@@ -57,6 +57,13 @@ public:
             return QVariant();
         }
     }
+    
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override {
+        if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
+            return section == 0 ? QString("Name") : QString("Value");
+        }
+        return QVariant();
+    }
 private:
     const std::shared_ptr<const PhysicalDeviceProperty> m_physicalDeviceProperties = vmShared.physicalDeviceProperty();
 };
